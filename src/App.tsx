@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { connectOrbisDidPkh, connectOrbisDidKey, autoConnect, userLogout, getMostRecentDataFromTable, insert, select, update } from '../utils/orbisUtil'; 
+import { connectOrbisDidPkh, connectOrbisDidKey, autoConnect, userLogout, getMostRecentDataFromTable, insert, select, update, insertProfileType } from '../utils/orbisUtil'; 
 function App() {
 
   const [user, setUser] = useState<any>();
@@ -66,6 +66,7 @@ function App() {
         <button onClick={connectDidPkh}>Connect did:pkh</button>
         <button onClick={connectDidKey}>Connect did:key</button>
         <button onClick={insert}>Add Row</button>
+        <button onClick={insertProfileType}>Insert Profile Type</button>
         <button onClick={showRows}>Get All Rows</button>
         <button onClick={showMostRecentRow}>Get Last Row</button>
         <button onClick={updateRows}>Update Rows</button>

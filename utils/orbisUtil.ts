@@ -20,6 +20,7 @@ const data = {
     },
     models: {
         test_model: process.env.REACT_APP_TEST_MODEL,
+        profile_type_model: process.env.REACT_APP_PROFILE_TYPE_MODEL
     }
 }
 
@@ -220,7 +221,7 @@ export async function insert() {
 
  export async function select() {
     try {
-        let selectStatement = await orbisdb.select().from(data.models.test_model).context(process.env.REACT_APP_PLURALITY_CONTEXT);
+        let selectStatement = await orbisdb.select().from(data.models.profile_type_model).context(process.env.REACT_APP_PLURALITY_CONTEXT);
         const query = selectStatement.build()
         console.log("Query that will be run", query)
         const result= await selectStatement.run();
@@ -235,3 +236,39 @@ export async function insert() {
       console.log("Error", error)
     }
   }
+
+  export async function insertProfileType() {
+    const insertStatement = await orbisdb
+    .insert(data.models.profile_type_model)
+    .value(
+        {
+            profile_name: 'Fashion Week Connect',
+            platforms: '[{"platform":"Instagram","authentication":true},{"platform":"ArtificialRome","authentication":false},{"platform":"TikTok","authentication":true},{"platform":"Roblox","authentication":true},{"platform":"Snapchat","authentication":true},{"platform":"Spatial","authentication":true},{"platform":"Fortnite","authentication":true},{"platform":"DRESSX","authentication":false}]',
+            version: '1.0',
+            description: 'The profile for DFDC Fashion Week Connect event'
+
+            // profile_name: 'test',
+            // platforms: 'test',
+            // version: 'test',
+            // description: 'test'
+        }
+    )
+    // optionally, you can scope this insert to a specific context
+    .context(process.env.REACT_APP_PLURALITY_CONTEXT);
+
+    // Perform local JSON Schema validation before running the query
+    const validation: any = await insertStatement.validate()
+    if(!validation.valid){
+        throw "Error during validation: " + validation.error
+    }
+
+    try {
+        const result = await insertStatement.run();
+        console.log(result);
+    }
+    catch (error) {
+        console.log(error);
+    }
+    // All runs of a statement are stored within the statement, in case you want to reuse the same statmenet
+    console.log(insertStatement.runs)    
+ }
