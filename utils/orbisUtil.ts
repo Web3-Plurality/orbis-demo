@@ -242,10 +242,15 @@ export async function insert() {
     .insert(data.models.profile_type_model)
     .value(
         {
-            profile_name: 'Fashion Week Connect',
-            platforms: '[{"platform":"Instagram","authentication":true},{"platform":"ArtificialRome","authentication":false},{"platform":"TikTok","authentication":true},{"platform":"Roblox","authentication":true},{"platform":"Snapchat","authentication":true},{"platform":"Spatial","authentication":true},{"platform":"Fortnite","authentication":true},{"platform":"DRESSX","authentication":false}]',
+            profile_name: 'Marni Loyalty',
+            platforms: '[{"platform":"Instagram","authentication":false},{"platform":"Meta","authentication":false},{"platform":"Twitter","authentication":true},{"platform":"TikTok","authentication":true},{"platform":"Roblox","authentication":true},{"platform":"Snapchat","authentication":true}]',
             version: '1.0',
-            description: 'The profile for DFDC Fashion Week Connect event'
+            description: 'The profile for Marni Loyalty Program'
+
+            // profile_name: 'Fashion Week Connect',
+            // platforms: '[{"platform":"Instagram","authentication":true},{"platform":"ArtificialRome","authentication":false},{"platform":"TikTok","authentication":true},{"platform":"Roblox","authentication":true},{"platform":"Snapchat","authentication":true},{"platform":"Spatial","authentication":true},{"platform":"Fortnite","authentication":true},{"platform":"DRESSX","authentication":false}]',
+            // version: '1.0',
+            // description: 'The profile for DFDC Fashion Week Connect event'
 
             // profile_name: 'test',
             // platforms: 'test',
@@ -271,4 +276,27 @@ export async function insert() {
     }
     // All runs of a statement are stored within the statement, in case you want to reuse the same statmenet
     console.log(insertStatement.runs)    
+ }
+
+ export async function updateProfileType() {
+    // This will perform a shallow merge before updating the document 
+    // { ...oldContent, ...newContent }
+    const updateStatement = await orbisdb
+    .update("kjzl6kcym7w8y5lbahgsb1ax59jmgsbrahav26sboushd6x7bcltaq0k37bt8cx")
+    .set(
+        {
+            profile_name: "Marni Loyalty Rewards",
+            description: "Earn points by connecting your social profiles",
+        }
+    )
+
+    try {
+        const result= await updateStatement.run();
+        console.log(result);
+    }
+    catch (error) {
+        console.log(error);
+    }
+    // All runs of a statement are stored within the statement, in case you want to reuse the same statmenet
+    console.log(updateStatement.runs)
  }
